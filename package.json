@@ -1,0 +1,24 @@
+{
+  "name": "twitter_clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fixtures.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/withfpp/node-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/withfpp/node-app/issues"
+  },
+  "homepage": "https://github.com/withfpp/node-app",
+  "dependencies": {
+    "body-parser": "^1.12.3",
+    "express": "^4.12.3",
+    "lodash": "^3.7.0"
+  }
+}
