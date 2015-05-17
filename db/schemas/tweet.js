@@ -7,16 +7,6 @@ var tweetSchema = new Schema({
     created: {type: Number},
     text: String
 });
-//
-//tweetSchema.methods.toClient = function(){
-//    var obj = {
-//        id: this._id,
-//        text: this.text,
-//        created: this.created,
-//        userId: this.userId
-//    };
-//    return obj
-//}
 
 tweetSchema.methods.toClient = function() {
     var tweet = _.pick(this, ['userId', 'created', 'text'])

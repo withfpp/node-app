@@ -3,6 +3,7 @@
  */
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
+    bcrypt = require('bcrypt'),
     fixtures = require('./fixtures.js'),
     _ = require('lodash'),
     conn = require('./db'),
@@ -27,10 +28,15 @@ function verify(username, password, done){
             console.log('not user')
             return done(null, false, { message: 'Incorrect username.' });
         }
-        if (user.password !== password) {
-            return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, user);
+
+        bcrypt.compare(password, user.password, function(err, matched) {
+              if (err) {
+                return done(err)
+              }
+              matched ? 
+                done(null, user) : 
+                done(null, false, { message: 'Incorrect password.' })
+            })
     });
 }
 
