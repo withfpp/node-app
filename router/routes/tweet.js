@@ -3,16 +3,25 @@ var router = express.Router()
 var ensureAuthentication = require('../../middleware/ensureAuthentication');
 var conn = require('../../db');
 var Tweet = conn.model('Tweet');
+var User = conn.model('User');
 var _ = require('lodash');
 
 
-router.get('/', function(req, res) {
-  if (!req.query.userId) {
+router.get('/', ensureAuthentication, function(req, res) {
+
+  var stream = req.query.stream
+  var userId = req.query.userId
+  var options = { sort: { created: -1 } }
+  var query = null
+
+
+  if (stream === 'home_timeline') {
+    query = { userId: { $in: req.user.followingIds }}
+  } else if (stream === 'profile_timeline' && userId) {
+    query = { userId: userId }
+  } else {
     return res.sendStatus(400)
   }
-
-  var query = { userId: req.query.userId }
-  var options = { sort: { created: -1 } }
 
   Tweet.find(query, null, options, function(err, tweets) {
     if (err) {

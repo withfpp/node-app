@@ -46,4 +46,9 @@ userSchema.methods.getFriends = function(done) {
   this.model('User').find({id: {$in: this.followingIds}}, done)
 }
 
+userSchema.methods.getFollowers = function(done) {
+  this.model('User').find({followingIds: {$in: [this.id]}}, done)
+}
+
+
 module.exports = userSchema;
